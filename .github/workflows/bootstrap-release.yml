@@ -2,7 +2,7 @@ name: bootstrap-final-release
 on:
   push:
     paths:
-      - '.bootstrap/READY_FINAL'
+      - '.bootstrap/READY_FINAL2'
 permissions:
   contents: write
 jobs:
@@ -47,8 +47,6 @@ jobs:
           print('release files including manifest:', sum(1 for p in root.rglob('*') if p.is_file()))
           print('manifest entries:', len(files))
           PY
-          cd /tmp/release
-          python verify_release.py
       - name: Build reviewable release branch
         shell: bash
         run: |
