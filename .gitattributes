@@ -1,0 +1,14 @@
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.eps text eol=lf
+*.ps1 text eol=lf
+# Preserve archived result/config bytes exactly as generated on the execution platform.
+real_data/results/** -text
+real_data/configs/dataset_manifest.json -text
+real_data/environment_manifest.txt -text
+real_data/test_report.txt -text

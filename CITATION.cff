@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If this research artifact is used, please cite the associated manuscript."
+title: "Stress-Testing Conformal Regression Under Controlled Covariate Shift: Validity Breakpoints, Weight Fragility, and Interval Usability"
+type: software
+authors:
+  - family-names: Erkalkan
+    given-names: Ercan
+    orcid: "https://orcid.org/0000-0001-9259-7112"
+    email: ercan.erkalkan@marmara.edu.tr
+version: 1.0.0
+date-released: 2026-08-17
+repository-code: "https://github.com/ErcanErkalkan/conformal-regression-shift-stress-test"

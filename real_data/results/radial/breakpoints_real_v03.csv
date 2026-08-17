@@ -1,0 +1,11 @@
+dataset,shift_mode,method,B_cov,B_cov_CI,B_info,B_inf
+ccpp,radial,CQR-GBR,,,,
+ccpp,radial,Estimated-WCP-Primary,,,,
+ccpp,radial,Estimated-WCP-Sensitivity,,,,
+ccpp,radial,Oracle-WCP-Ridge,,,,
+ccpp,radial,SCP-Ridge,,,,
+superconductivity,radial,CQR-GBR,,,,
+superconductivity,radial,Estimated-WCP-Primary,,,1.0,
+superconductivity,radial,Estimated-WCP-Sensitivity,,,,
+superconductivity,radial,Oracle-WCP-Ridge,,,,
+superconductivity,radial,SCP-Ridge,,,,

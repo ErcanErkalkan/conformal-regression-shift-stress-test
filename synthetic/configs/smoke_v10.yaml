@@ -1,0 +1,26 @@
+lock_mode: false
+seed: 2026081601
+alpha: 0.10
+coverage_tolerance: 0.03
+persistent_failure_points: 2
+info_ess_ratio_threshold: 0.20
+infinite_interval_threshold: 0.05
+repetitions: 2
+n_train: 120
+n_cal: 120
+n_test: 180
+n_target_unlabeled: 120
+n_features: 5
+dgp_types: [linear, nonlinear]
+noise_types: [gaussian]
+shift_families: [mean, variance, mixture, tail_mixture, nonlinear]
+severities: [0.0, 0.5, 1.0, 1.5, 2.0]
+cqr_estimators: 12
+density_ratio_max_iter: 250
+mmd_max_points: 80
+primary_density_ratio:
+  degree: 2
+  C: 0.1
+sensitivity_density_ratio:
+  degree: 2
+  C: 0.01

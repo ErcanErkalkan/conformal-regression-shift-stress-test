@@ -1,0 +1,13 @@
+layer,metric,descriptive_conditions_with_any_reversal,descriptive_eligible_conditions,ci_screened_conditions_with_any_reversal,ci_screened_eligible_conditions,baseline_pair_profile_comparisons_distinguishable_by_95CI,baseline_pair_profile_comparisons_total
+Synthetic,coverage_deficit,60,80,0,80,5,60
+Synthetic,coverage_gap,73,80,15,80,10,60
+Synthetic,infinite_interval_fraction,0,80,0,80,0,60
+Synthetic,interval_score_finite,5,14,0,14,25,30
+Real directional,coverage_deficit,20,20,4,20,2,30
+Real directional,coverage_gap,18,20,0,20,1,30
+Real directional,infinite_interval_fraction,0,20,0,20,0,30
+Real directional,interval_score_finite,11,16,0,16,12,24
+Real radial,coverage_deficit,4,4,0,4,2,12
+Real radial,coverage_gap,4,4,0,4,0,12
+Real radial,infinite_interval_fraction,0,4,0,4,0,12
+Real radial,interval_score_finite,2,3,0,3,6,12

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv*/
+venv/
+.env
+*.log
+.DS_Store
+real_data/data/
+real_data/runs/
+synthetic/runs/
+**/reproduced/
+paper/*.aux
+paper/*.blg
+paper/*.log
+paper/*.out

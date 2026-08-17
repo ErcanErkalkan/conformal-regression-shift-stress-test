@@ -1,0 +1,38 @@
+{
+  "version": "1.0.1-locked",
+  "config_sha256": "22bd2bd5054ffa929878f8c5a4dccdbcc7c8abe51c038a7f9624721d5d63123a",
+  "expected_raw_rows": 14520,
+  "expected_seed_rows": 3000,
+  "shards": [
+    {
+      "dir": "runs/main_shard_00_05",
+      "rep_start": 0,
+      "rep_end": 5
+    },
+    {
+      "dir": "runs/main_shard_05_10",
+      "rep_start": 5,
+      "rep_end": 10
+    },
+    {
+      "dir": "runs/main_shard_10_15",
+      "rep_start": 10,
+      "rep_end": 15
+    },
+    {
+      "dir": "runs/main_shard_15_20",
+      "rep_start": 15,
+      "rep_end": 20
+    },
+    {
+      "dir": "runs/main_shard_20_25",
+      "rep_start": 20,
+      "rep_end": 25
+    },
+    {
+      "dir": "runs/main_shard_25_30",
+      "rep_start": 25,
+      "rep_end": 30
+    }
+  ]
+}
