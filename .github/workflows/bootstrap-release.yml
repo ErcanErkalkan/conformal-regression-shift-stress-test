@@ -1,0 +1,35 @@
+name: bootstrap-clean-release
+on:
+  push:
+    paths:
+      - '.bootstrap/READY'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reconstruct release archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .bootstrap/release.b64.part-* > /tmp/release.b64
+          base64 -d /tmp/release.b64 > /tmp/release.tar.gz
+          echo "f607e0663fb1014d20d3de907167ef65e4864e12c3f220025fec535f33784989  /tmp/release.tar.gz" | sha256sum -c -
+          mkdir -p /tmp/release
+          tar -xzf /tmp/release.tar.gz -C /tmp/release
+      - name: Publish one clean main commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Ercan Erkalkan"
+          git config user.email "ercan.erkalkan@marmara.edu.tr"
+          git checkout --orphan release-final
+          git rm -rf . || true
+          cp -a /tmp/release/. .
+          git add -A
+          git commit -m "Publish reproducible conformal shift stress-test artifact v1.0.0"
+          git push --force origin HEAD:main
