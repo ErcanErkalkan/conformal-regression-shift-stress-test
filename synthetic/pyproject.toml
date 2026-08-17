@@ -1,0 +1,15 @@
+[project]
+name = "cp-shift-stress-test"
+version = "1.0.1"
+description = "Locked stress-testing framework for conformal regression under covariate shift"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "PyYAML>=6.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

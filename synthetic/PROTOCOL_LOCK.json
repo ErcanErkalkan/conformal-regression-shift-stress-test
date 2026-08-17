@@ -1,0 +1,15 @@
+{
+  "protocol": "v1.0.1-locked",
+  "locked_config": "configs/main_v10_locked.yaml",
+  "config_sha256": "22bd2bd5054ffa929878f8c5a4dccdbcc7c8abe51c038a7f9624721d5d63123a",
+  "master_seed": 2026081601,
+  "expected_primary_raw_rows": 14520,
+  "expected_primary_seed_rows": 3000,
+  "coverage_nominal": 0.90,
+  "coverage_lower_acceptable": 0.87,
+  "persistent_failure_points": 2,
+  "info_ess_ratio_threshold": 0.20,
+  "infinite_interval_threshold": 0.05,
+  "breakpoint_search_excludes_delta_zero": true,
+  "baseline_quality_is_reported_separately": true
+}

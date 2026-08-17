@@ -1,0 +1,40 @@
+{
+  "protocol_version": "0.3-prelock",
+  "master_seed": 2026081602,
+  "repetitions": 20,
+  "split_fractions": {
+    "train": 0.4,
+    "calibration": 0.25,
+    "reservoir": 0.35
+  },
+  "directional_tilt_lambda": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "radial_sensitivity_lambda": [
+    0.0,
+    1.0,
+    2.0
+  ],
+  "score_clip": 3.0,
+  "target_unlabeled_n": 1000,
+  "target_test_n": 2500,
+  "nominal_coverage": 0.9,
+  "coverage_lower_bound": 0.87,
+  "persistence": 2,
+  "info_ess_ratio_threshold": 0.2,
+  "infinite_fraction_threshold": 0.05,
+  "primary_density_ratio": {
+    "model": "linear_logistic",
+    "logistic_C": 0.1
+  },
+  "sensitivity_density_ratio": {
+    "model": "linear_logistic",
+    "logistic_C": 0.01
+  },
+  "density_source_n": 1000,
+  "cqr_estimators": 80
+}

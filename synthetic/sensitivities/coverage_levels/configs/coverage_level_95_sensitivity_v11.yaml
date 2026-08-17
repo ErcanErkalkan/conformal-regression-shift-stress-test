@@ -1,0 +1,34 @@
+lock_mode: false
+seed: 2026081601
+alpha: 0.050000000000000044
+coverage_tolerance: 0.03
+persistent_failure_points: 2
+info_ess_ratio_threshold: 0.2
+infinite_interval_threshold: 0.05
+repetitions: 30
+n_train: 1000
+n_cal: 1000
+n_test: 2500
+n_target_unlabeled: 1000
+n_features: 5
+dgp_types:
+- linear
+noise_types:
+- gaussian
+shift_families:
+- mean
+- variance
+- tail_mixture
+severities:
+- 0.0
+- 1.0
+- 2.0
+cqr_estimators: 80
+density_ratio_max_iter: 400
+mmd_max_points: 200
+primary_density_ratio:
+  degree: 2
+  C: 0.1
+sensitivity_density_ratio:
+  degree: 2
+  C: 0.01

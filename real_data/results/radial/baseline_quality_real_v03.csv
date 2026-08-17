@@ -1,0 +1,11 @@
+dataset,shift_mode,method,coverage_mean,coverage_ci95_high,ess_ratio_mean,infinite_fraction_mean,baseline_undercoverage,baseline_undercoverage_CI,baseline_info_fragile,baseline_usability_issue
+ccpp,radial,CQR-GBR,0.9014200000000001,0.9065094586163097,1.0,0.0,False,False,False,False
+ccpp,radial,Estimated-WCP-Primary,0.8987400000000001,0.9037083461950365,0.9927105873972468,0.0,False,False,False,False
+ccpp,radial,Estimated-WCP-Sensitivity,0.8984400000000001,0.9034466697480295,0.995745583598351,0.0,False,False,False,False
+ccpp,radial,Oracle-WCP-Ridge,0.8977,0.9026361654944653,1.0,0.0,False,False,False,False
+ccpp,radial,SCP-Ridge,0.8977,0.9026361654944653,1.0,0.0,False,False,False,False
+superconductivity,radial,CQR-GBR,0.90114,0.9062766445329078,1.0,0.0,False,False,False,False
+superconductivity,radial,Estimated-WCP-Primary,0.89502,0.9005258782809491,0.9130969724909216,0.0,False,False,False,False
+superconductivity,radial,Estimated-WCP-Sensitivity,0.89548,0.9010619445754403,0.961136412371439,0.0,False,False,False,False
+superconductivity,radial,Oracle-WCP-Ridge,0.89768,0.9021447691317679,1.0,0.0,False,False,False,False
+superconductivity,radial,SCP-Ridge,0.89768,0.9021447691317679,1.0,0.0,False,False,False,False

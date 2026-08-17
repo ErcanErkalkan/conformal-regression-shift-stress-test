@@ -1,0 +1,88 @@
+{
+  "manifest_version": "0.1-prelock",
+  "repository": "UCI Machine Learning Repository",
+  "license_required": "CC BY 4.0",
+  "datasets": [
+    {
+      "key": "ccpp",
+      "uci_id": 294,
+      "name": "Combined Cycle Power Plant",
+      "doi": "10.24432/C5002N",
+      "expected_rows": 9568,
+      "reported_features": 4,
+      "target": "PE",
+      "drop_columns": [],
+      "source_url": "https://archive.ics.uci.edu/dataset/294/combined%2Bcycle%2Bpower%2Bplant"
+    },
+    {
+      "key": "appliances",
+      "uci_id": 374,
+      "name": "Appliances Energy Prediction",
+      "doi": "10.24432/C5VC8G",
+      "expected_rows": 19735,
+      "reported_features": 28,
+      "target": "Appliances",
+      "drop_columns": [
+        "date",
+        "rv1",
+        "rv2"
+      ],
+      "source_url": "https://archive.ics.uci.edu/dataset/374/appliances%2Benergy%2Bprediction"
+    },
+    {
+      "key": "superconductivity",
+      "uci_id": 464,
+      "name": "Superconductivty Data",
+      "doi": "10.24432/C53P47",
+      "expected_rows": 21263,
+      "reported_features": 81,
+      "target": "critical_temp",
+      "drop_columns": [],
+      "source_url": "https://archive.ics.uci.edu/dataset/464/superconductivty%2Bdata"
+    },
+    {
+      "key": "gas_turbine_nox",
+      "uci_id": 551,
+      "name": "Gas Turbine CO and NOx Emission Data Set",
+      "doi": "10.24432/C5WC95",
+      "expected_rows": 36733,
+      "reported_features": 12,
+      "target": "NOX",
+      "target_aliases": [
+        "NOX",
+        "NOx",
+        "nox"
+      ],
+      "drop_columns": [
+        "year",
+        "CO"
+      ],
+      "allowed_predictors": [
+        "AT",
+        "AP",
+        "AH",
+        "AFDP",
+        "GTEP",
+        "TIT",
+        "TAT",
+        "TEY",
+        "CDP"
+      ],
+      "source_url": "https://archive.ics.uci.edu/dataset/551/gas%2Bturbine%2Bco%2B"
+    },
+    {
+      "key": "online_news",
+      "uci_id": 332,
+      "name": "Online News Popularity",
+      "doi": "10.24432/C5NS3V",
+      "expected_rows": 39644,
+      "reported_features": 58,
+      "target": "shares",
+      "drop_columns": [
+        "url",
+        "timedelta"
+      ],
+      "source_url": "https://archive.ics.uci.edu/dataset/332/online%2Bnews%2Bpopularity"
+    }
+  ]
+}
