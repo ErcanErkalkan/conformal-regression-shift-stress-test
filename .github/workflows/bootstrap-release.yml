@@ -2,7 +2,7 @@ name: bootstrap-clean-release
 on:
   push:
     paths:
-      - '.bootstrap/READY'
+      - '.bootstrap/READY_RELEASE_BRANCH'
 permissions:
   contents: write
 jobs:
@@ -21,7 +21,7 @@ jobs:
           echo "ad061f753cfece30db26bc0cae44150730c65e52f340ad0d2a68e28fd7667b2c  /tmp/release.tar.xz" | sha256sum -c -
           mkdir -p /tmp/release
           tar -xJf /tmp/release.tar.xz -C /tmp/release
-      - name: Publish one clean main commit
+      - name: Publish verified orphan release branch
         shell: bash
         run: |
           set -euo pipefail
@@ -32,4 +32,4 @@ jobs:
           cp -a /tmp/release/. .
           git add -A
           git commit -m "Publish reproducible conformal shift stress-test artifact v1.0.0"
-          git push --force origin HEAD:main
+          git push origin HEAD:refs/heads/release-final
