@@ -2,9 +2,10 @@ name: bootstrap-clean-release
 on:
   push:
     paths:
-      - '.bootstrap/READY_OBJECT'
+      - '.bootstrap/READY_OBJECT2'
 permissions:
   contents: write
+  statuses: write
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -36,12 +37,12 @@ jobs:
           repo = os.environ['REPO']
           parent = os.environ['PARENT_SHA']
           root = pathlib.Path('/tmp/release')
-          api = f'https://api.github.com/repos/{repo}/git'
+          base = f'https://api.github.com/repos/{repo}'
 
-          def post(path, payload):
+          def post(url, payload):
               data = json.dumps(payload).encode('utf-8')
               req = urllib.request.Request(
-                  api + path,
+                  url,
                   data=data,
                   method='POST',
                   headers={
@@ -58,23 +59,27 @@ jobs:
           files = sorted(p for p in root.rglob('*') if p.is_file())
           for p in files:
               rel = p.relative_to(root).as_posix()
-              blob = post('/blobs', {
+              blob = post(base + '/git/blobs', {
                   'content': base64.b64encode(p.read_bytes()).decode('ascii'),
                   'encoding': 'base64',
               })
               mode = '100755' if os.access(p, os.X_OK) else '100644'
               entries.append({'path': rel, 'mode': mode, 'type': 'blob', 'sha': blob['sha']})
 
-          tree = post('/trees', {'tree': entries})
-          commit = post('/commits', {
+          tree = post(base + '/git/trees', {'tree': entries})
+          commit = post(base + '/git/commits', {
               'message': 'Publish reproducible conformal shift stress-test artifact v1.0.0',
               'tree': tree['sha'],
               'parents': [parent],
               'author': {'name': 'Ercan Erkalkan', 'email': 'ercan.erkalkan@marmara.edu.tr'},
               'committer': {'name': 'Ercan Erkalkan', 'email': 'ercan.erkalkan@marmara.edu.tr'},
           })
+          post(base + f'/statuses/{parent}', {
+              'state': 'success',
+              'context': f'release-object/{commit["sha"]}',
+              'description': f'Verified {len(files)}-file release commit object',
+          })
           print(f'FILES={len(files)}')
           print(f'TREE_SHA={tree["sha"]}')
           print(f'REMOTE_COMMIT_SHA={commit["sha"]}')
-          pathlib.Path('/tmp/remote_commit_sha').write_text(commit['sha'])
           PY
