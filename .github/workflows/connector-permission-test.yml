@@ -1,8 +1,0 @@
-name: Connector permission test
-on:
-  workflow_dispatch:
-jobs:
-  noop:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ok
