@@ -2,7 +2,7 @@ name: bootstrap-clean-release
 on:
   push:
     paths:
-      - '.bootstrap/READY_TAG'
+      - '.bootstrap/READY_OBJECT'
 permissions:
   contents: write
 jobs:
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Reconstruct release archive
+      - name: Reconstruct and verify release archive
         shell: bash
         run: |
           set -euo pipefail
@@ -21,16 +21,60 @@ jobs:
           echo "ad061f753cfece30db26bc0cae44150730c65e52f340ad0d2a68e28fd7667b2c  /tmp/release.tar.xz" | sha256sum -c -
           mkdir -p /tmp/release
           tar -xJf /tmp/release.tar.xz -C /tmp/release
-      - name: Publish verified orphan commit as tag
+      - name: Create verified Git tree and commit objects
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PARENT_SHA: ${{ github.sha }}
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "Ercan Erkalkan"
-          git config user.email "ercan.erkalkan@marmara.edu.tr"
-          git checkout --orphan release-final
-          git rm -rf . || true
-          cp -a /tmp/release/. .
-          git add -A
-          git commit -m "Publish reproducible conformal shift stress-test artifact v1.0.0"
-          git tag -f artifact-v1.0.0-root
-          git push --force origin refs/tags/artifact-v1.0.0-root
+          python - <<'PY'
+          import base64, json, os, pathlib, urllib.request
+
+          token = os.environ['GH_TOKEN']
+          repo = os.environ['REPO']
+          parent = os.environ['PARENT_SHA']
+          root = pathlib.Path('/tmp/release')
+          api = f'https://api.github.com/repos/{repo}/git'
+
+          def post(path, payload):
+              data = json.dumps(payload).encode('utf-8')
+              req = urllib.request.Request(
+                  api + path,
+                  data=data,
+                  method='POST',
+                  headers={
+                      'Authorization': f'Bearer {token}',
+                      'Accept': 'application/vnd.github+json',
+                      'X-GitHub-Api-Version': '2022-11-28',
+                      'Content-Type': 'application/json',
+                  },
+              )
+              with urllib.request.urlopen(req) as r:
+                  return json.load(r)
+
+          entries = []
+          files = sorted(p for p in root.rglob('*') if p.is_file())
+          for p in files:
+              rel = p.relative_to(root).as_posix()
+              blob = post('/blobs', {
+                  'content': base64.b64encode(p.read_bytes()).decode('ascii'),
+                  'encoding': 'base64',
+              })
+              mode = '100755' if os.access(p, os.X_OK) else '100644'
+              entries.append({'path': rel, 'mode': mode, 'type': 'blob', 'sha': blob['sha']})
+
+          tree = post('/trees', {'tree': entries})
+          commit = post('/commits', {
+              'message': 'Publish reproducible conformal shift stress-test artifact v1.0.0',
+              'tree': tree['sha'],
+              'parents': [parent],
+              'author': {'name': 'Ercan Erkalkan', 'email': 'ercan.erkalkan@marmara.edu.tr'},
+              'committer': {'name': 'Ercan Erkalkan', 'email': 'ercan.erkalkan@marmara.edu.tr'},
+          })
+          print(f'FILES={len(files)}')
+          print(f'TREE_SHA={tree["sha"]}')
+          print(f'REMOTE_COMMIT_SHA={commit["sha"]}')
+          pathlib.Path('/tmp/remote_commit_sha').write_text(commit['sha'])
+          PY
