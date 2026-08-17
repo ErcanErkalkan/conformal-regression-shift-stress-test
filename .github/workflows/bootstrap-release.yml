@@ -17,10 +17,10 @@ jobs:
         run: |
           set -euo pipefail
           cat .bootstrap/release.b64.part-* > /tmp/release.b64
-          base64 -d /tmp/release.b64 > /tmp/release.tar.gz
-          echo "f607e0663fb1014d20d3de907167ef65e4864e12c3f220025fec535f33784989  /tmp/release.tar.gz" | sha256sum -c -
+          base64 -d /tmp/release.b64 > /tmp/release.tar.xz
+          echo "ad061f753cfece30db26bc0cae44150730c65e52f340ad0d2a68e28fd7667b2c  /tmp/release.tar.xz" | sha256sum -c -
           mkdir -p /tmp/release
-          tar -xzf /tmp/release.tar.gz -C /tmp/release
+          tar -xJf /tmp/release.tar.xz -C /tmp/release
       - name: Publish one clean main commit
         shell: bash
         run: |
