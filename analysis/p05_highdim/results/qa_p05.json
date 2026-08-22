@@ -1,0 +1,18 @@
+{
+  "version": "P0-5-v1",
+  "design": "nested nuisance-dimension isolation",
+  "repetitions": 30,
+  "dimensions": [5, 20, 50, 100],
+  "families": ["mean", "variance", "mixture", "tail_mixture"],
+  "severities": [0.0, 1.0, 2.0],
+  "dgp": "linear",
+  "noise": "gaussian",
+  "n_train": 1000,
+  "n_cal": 1000,
+  "n_test": 2500,
+  "n_target_unlabeled": 1000,
+  "rows": 4320,
+  "duplicates": 0,
+  "coverage_outside_0_1": 0,
+  "estimated_nonconverged": 0
+}
