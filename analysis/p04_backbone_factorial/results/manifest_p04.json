@@ -1,0 +1,52 @@
+{
+  "version": "P0-4-v1",
+  "purpose": "common-backbone factorial separation of wrapper and predictor effects",
+  "factorial_core": {
+    "wrappers": ["SCP", "known-weight WCP"],
+    "synthetic_backbones": ["Ridge(alpha=1)", "mean GBR"],
+    "public_backbones": ["Ridge(alpha=1)", "HistGradientBoostingRegressor"],
+    "interaction": "(WCP_GBR-SCP_GBR)-(WCP_Ridge-SCP_Ridge)"
+  },
+  "synthetic_gbr": {
+    "loss": "squared_error",
+    "n_estimators": 80,
+    "learning_rate": 0.1,
+    "max_depth": 3
+  },
+  "public_hgbr": {
+    "max_iter": 80,
+    "learning_rate": 0.1,
+    "max_leaf_nodes": 15,
+    "max_depth": 3,
+    "min_samples_leaf": 20,
+    "l2_regularization": 1.0,
+    "early_stopping": true,
+    "validation_fraction": 0.15,
+    "n_iter_no_change": 8,
+    "tol": 1e-05
+  },
+  "cqr_family_sensitivity": {
+    "synthetic_only": true,
+    "CQR-GBR": "locked 0.05/0.95 gradient boosted quantiles, 80 estimators",
+    "CQR-Linear": "QuantileRegressor q=.05/.95 alpha=0.0, solver=highs"
+  },
+  "synthetic": {
+    "repetitions": 30,
+    "all_dgp_noise": true,
+    "all_shift_families": true,
+    "factorial_oracle_families": ["mean", "variance", "mixture", "tail_mixture"]
+  },
+  "public": {
+    "repetitions": 20,
+    "datasets": ["appliances", "ccpp", "gas_turbine_nox", "online_news", "superconductivity"],
+    "modes": ["directional", "radial"],
+    "target_test_n": 2500
+  },
+  "data_sha256": {
+    "ccpp": "007b39d32b2d7cd8599e8f92be298006b18b216f43a25f23ffa405880d5bdf43",
+    "appliances": "04061f9f449f503768ed370262beb4865a3e4e30c75b0d387cbc7c0140c624b6",
+    "superconductivity": "f989abf12e4214741b28204b59e7fb9f024ad7c2d11e4c4e3afa74fbb1b6580d",
+    "gas_turbine_nox": "811de4b24d263079000733e700d556ab8c3cdc9e8164d50a45e421a428e8cd17",
+    "online_news": "e70a03997c3e568a39508e39489aea4088e18436f18cbb8139f7f6ace45f53f0"
+  }
+}
