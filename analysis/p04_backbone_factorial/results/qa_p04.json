@@ -1,0 +1,16 @@
+{
+  "synthetic_rows": 17040,
+  "public_rows": 3200,
+  "synthetic_reps": 30,
+  "public_reps": 20,
+  "public_datasets": [
+    "appliances",
+    "ccpp",
+    "gas_turbine_nox",
+    "online_news",
+    "superconductivity"
+  ],
+  "duplicate_synthetic_keys": 0,
+  "duplicate_public_keys": 0,
+  "coverage_outside_0_1": 0
+}
