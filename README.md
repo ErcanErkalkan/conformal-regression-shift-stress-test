@@ -1,20 +1,23 @@
 # Conformal Regression Shift Stress Test
 
-Research artifact for **“Stress-Testing Conformal Regression Under Controlled Covariate Shift: Validity Breakpoints, Weight Fragility, and Interval Usability.”**
+Research artifact for **“Stress-Testing Conformal Regression Under Covariate Shift: A Reproducible Benchmark of Coverage, Weight Reliability, and Interval Usability.”**
 
 Author: **Ercan Erkalkan** — Marmara University, Vocational School of Technical Sciences, Department of Electronics and Automation, Artificial Intelligence Operator Program. ORCID: `0000-0001-9259-7112`.
 
 ## Scope
 
-This repository is a reproducible **evaluation and stress-testing artifact**, not a new conformal-prediction algorithm or coverage theorem. The study separates:
+This repository provides a reproducible **robustness-benchmarking and stress-testing artifact** for conformal regression under controlled covariate shift. It does not introduce a new conformal construction. Instead, it evaluates complete conformal regression pipelines over increasing shift severity while keeping distinct failure mechanisms separate.
 
-1. persistent coverage/validity failure;
-2. weight concentration and information fragility;
-3. interval usability failure;
-4. direct estimated-vs-known-tilt weight fidelity where a construction oracle is available;
-5. secondary metric-specific ordering sensitivity.
+The benchmark tracks:
 
-The repository contains only the final scientific state. Pilot, smoke, obsolete v0.x runners, estimator-screen scratch outputs, virtual environments, caches, reviewer simulations, submission correspondence, and superseded manuscript versions are intentionally excluded. Large synthetic per-repetition tables and supplementary sensitivity raw tables are also omitted from Git history because the locked runners regenerate them deterministically; compact publication summaries, breakpoint tables, provenance manifests, checksums, and all executable code are versioned. Deterministic seed/per-repetition tables are regenerated from the locked master seeds rather than duplicated in Git history.
+1. trajectory-level coverage degradation rather than only a terminal shift point;
+2. paired pathwise differences between conformal pipelines;
+3. known-ratio or controlled-reference correction versus estimated-weight behavior;
+4. weight concentration and effective calibration information;
+5. interval usability, including unbounded weighted intervals;
+6. direct estimated-versus-reference weight agreement when an auditable reference is available.
+
+The repository contains only the final scientific state. Pilot, smoke, obsolete v0.x runners, estimator-screen scratch outputs, virtual environments, caches, reviewer simulations, submission correspondence, and superseded manuscript versions are intentionally excluded. Large synthetic per-repetition tables and supplementary sensitivity raw tables are omitted from Git history because the locked runners regenerate them deterministically; compact publication summaries, breakpoint tables, provenance manifests, checksums, and all executable code are versioned. Deterministic seed/per-repetition tables are regenerated from the locked master seeds rather than duplicated in Git history.
 
 ## Repository map
 
