@@ -17,14 +17,32 @@ The benchmark tracks:
 5. interval usability, including unbounded weighted intervals;
 6. direct estimated-versus-reference weight agreement when an auditable reference is available.
 
-The repository contains only the final scientific state. Pilot, smoke, obsolete v0.x runners, estimator-screen scratch outputs, virtual environments, caches, reviewer simulations, submission correspondence, and superseded manuscript versions are intentionally excluded. Large synthetic per-repetition tables and supplementary sensitivity raw tables are omitted from Git history because the locked runners regenerate them deterministically; compact publication summaries, breakpoint tables, provenance manifests, checksums, and all executable code are versioned. Deterministic seed/per-repetition tables are regenerated from the locked master seeds rather than duplicated in Git history.
+## Post-freeze robustness expansions
+
+Two explicit sensitivity layers broaden the frozen core without redefining its primary comparisons.
+
+### P0-2 — contemporary correction mechanisms
+
+KMM-CP and randomly localized conformal prediction (RLCP) are evaluated on all five synthetic shift families in the representative nonlinear/heteroscedastic setting and on all five public directional datasets using the full frozen repetition indices. KMM-CP reduces accumulated undercoverage relative to ordinary SCP on four of five synthetic paths and four of five public datasets; RLCP gives smaller but similarly broad gains.
+
+### P0-3 — density-ratio estimator families
+
+The Ridge-WCP wrapper, split/seed construction, target draws, and shift paths are held fixed while only the density-ratio estimator changes:
+
+- locked standardized linear logistic classifier odds;
+- nonlinear histogram gradient boosting classifier odds;
+- direct uLSIF least-squares density-ratio estimation.
+
+The P0-3 layer covers all five synthetic shift families with 30 repetitions and all five UCI datasets with 20 repetitions under both directional and radial controlled shifts. The results show estimator–shift-geometry interaction rather than a universally best estimator. HGB improves construction-reference weight fidelity across the public radial shifts but does not uniformly improve one-sided undercoverage. uLSIF supplies a particularly clear warning that high effective sample size is not equivalent to correct weighting: on every synthetic shift it has lower concentration than logistic while producing larger accumulated undercoverage.
+
+Compact P0-2 and P0-3 records are versioned under `analysis/`.
 
 ## Repository map
 
 ```text
 synthetic/       locked synthetic runner, tests, primary results, pre-specified sensitivities
 real_data/       UCI acquisition/validation, final runner, tests, directional + radial outputs
-analysis/        post-primary robustness-analysis code and compact derived summaries
+analysis/        post-primary robustness analyses, comparator expansions, compact outputs
 docs/protocols/  final locked protocols and accepted amendments
 ```
 
@@ -35,6 +53,15 @@ docs/protocols/  final locked protocols and accepted amendments
 | Synthetic primary | 14,520 | 3,000 |
 | Real directional | 2,500 | 500 |
 | Real radial | 600 | 120 |
+
+Additional post-freeze evidence:
+
+| layer | frozen result rows |
+|---|---:|
+| P0-2 contemporary comparator — synthetic | 3,630 |
+| P0-2 contemporary comparator — public | 2,500 |
+| P0-3 estimator-family stress — synthetic | 2,850 |
+| P0-3 estimator-family stress — public | 3,200 |
 
 Real-data configuration SHA-256: `b1aeef06011ba4c112737e9622f6a5adc477e87e76d36ebad5b6557871b6805a`.
 
@@ -51,7 +78,7 @@ See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for complete rerun inst
 
 ## Data policy
 
-Raw third-party UCI files are not redistributed. The repository provides official acquisition code, frozen schema rules, UCI identifiers, and canonical SHA-256 values. Compact final summaries, breakpoint tables, merge/configuration manifests, acquisition checksums, and all locked code/configuration are versioned. Seed manifests, per-repetition raw outputs, paired differences, trajectories, and supplementary sensitivity result tables are deterministic runner outputs and are intentionally regenerated rather than duplicated in Git history.
+Raw third-party UCI files are not redistributed. The repository provides official acquisition code, frozen schema rules, UCI identifiers, and canonical SHA-256 values. Compact final summaries, breakpoint tables, merge/configuration manifests, acquisition checksums, and executable code are versioned. Large deterministic per-repetition tables may be regenerated from the locked master seeds; the manuscript supplement archives the frozen P0-2/P0-3 result tables and verification manifests.
 
 ## Scientific provenance
 
@@ -62,6 +89,7 @@ Raw third-party UCI files are not redistributed. The repository provides officia
 - Information-fragility alarm: `ESS / n_cal <= 0.20` for two adjacent positive severities.
 - Usability alarm: infinite-interval fraction `>= 0.05` for two adjacent positive severities.
 - Primary density-ratio estimator: standardized linear logistic domain classifier, `C=0.1`; sensitivity `C=0.01`.
+- P0-3 alternatives: histogram gradient boosting classifier odds and direct uLSIF.
 
 Operational thresholds are reproducible stress-test landmarks, not universal theoretical constants.
 
