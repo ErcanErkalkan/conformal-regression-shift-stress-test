@@ -1,0 +1,17 @@
+{
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+  "logical_cpus": 5,
+  "physical_cpus": 5,
+  "ram_gib": 5.931419372558594,
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "scikit_learn": "1.8.0",
+  "thread_controls": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  }
+}
