@@ -1,0 +1,25 @@
+{
+  "rows": 240,
+  "repetitions": 20,
+  "target_years": [2014, 2015],
+  "methods": [
+    "Estimated-WCP-HGB",
+    "Estimated-WCP-Logit",
+    "KMM-CP-Ridge",
+    "RLCP-Ridge",
+    "SCP-Ridge",
+    "Target-Cal-SCP-Reference"
+  ],
+  "duplicate_keys": 0,
+  "coverage_outside_0_1": 0,
+  "kmm_solver_rows": 40,
+  "kmm_pg_over_1e4": 0,
+  "canonical_sha256": "811de4b24d263079000733e700d556ab8c3cdc9e8164d50a45e421a428e8cd17",
+  "year_counts": {
+    "2011": 7411,
+    "2012": 7628,
+    "2013": 7152,
+    "2014": 7158,
+    "2015": 7384
+  }
+}
