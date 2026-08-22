@@ -8,18 +8,11 @@ Author: **Ercan Erkalkan** — Marmara University, Vocational School of Technica
 
 This repository provides a reproducible **robustness-benchmarking and stress-testing artifact** for conformal regression under controlled covariate shift. It does not introduce a new conformal construction. Instead, it evaluates complete conformal regression pipelines over increasing shift severity while keeping distinct failure mechanisms separate.
 
-The benchmark tracks:
-
-1. trajectory-level coverage degradation rather than only a terminal shift point;
-2. paired pathwise differences between conformal pipelines;
-3. known-ratio or controlled-reference correction versus estimated-weight behavior;
-4. weight concentration and effective calibration information;
-5. interval usability, including unbounded weighted intervals;
-6. direct estimated-versus-reference weight agreement when an auditable reference is available.
+The benchmark tracks trajectory-level coverage degradation, paired pipeline differences, reference-versus-estimated weighting, effective calibration information, interval usability, and direct weight fidelity when an auditable reference is available.
 
 ## Post-freeze robustness expansions
 
-Three explicit sensitivity layers broaden the frozen core without redefining its primary comparisons.
+Four explicit sensitivity layers broaden the frozen core without redefining its primary comparisons.
 
 ### P0-2 — contemporary correction mechanisms
 
@@ -27,28 +20,26 @@ KMM-CP and randomly localized conformal prediction (RLCP) are evaluated on all f
 
 ### P0-3 — density-ratio estimator families
 
-The Ridge-WCP wrapper, split/seed construction, target draws, and shift paths are held fixed while only the density-ratio estimator changes:
-
-- locked standardized linear logistic classifier odds;
-- nonlinear histogram gradient boosting classifier odds;
-- direct uLSIF least-squares density-ratio estimation.
-
-The P0-3 layer covers all five synthetic shift families with 30 repetitions and all five UCI datasets with 20 repetitions under both directional and radial controlled shifts. The results show estimator–shift-geometry interaction rather than a universally best estimator. HGB improves construction-reference weight fidelity across the public radial shifts but does not uniformly improve one-sided undercoverage. uLSIF supplies a particularly clear warning that high effective sample size is not equivalent to correct weighting.
+The Ridge-WCP wrapper, split/seed construction, target draws, and shift paths are held fixed while the density-ratio estimator changes among locked linear-logistic odds, nonlinear histogram-gradient-boosting odds, and direct uLSIF. Results show estimator–shift-geometry interaction rather than a universally best estimator and demonstrate that high effective sample size is not equivalent to correct weighting.
 
 ### P0-4 — common-backbone factorial separation
 
-P0-4 separates conformal-wrapper and predictor-backbone effects. The synthetic 2×2 factorial crosses `{SCP, known-ratio WCP}` with `{Ridge, mean-GBR}` over 30 paired repetitions. The public extension crosses `{SCP, known-tilt WCP}` with `{Ridge, HGBR}` over all five datasets, 20 paired repetitions, and both directional and radial shifts. A separate CQR-Linear versus CQR-GBR sensitivity is also reported.
+P0-4 separates conformal-wrapper and predictor-backbone effects. The synthetic 2×2 factorial crosses `{SCP, known-ratio WCP}` with `{Ridge, mean-GBR}` over 30 paired repetitions. The public extension crosses `{SCP, known-tilt WCP}` with `{Ridge, HGBR}` over all five datasets, 20 paired repetitions, and directional/radial shifts. Known-weight WCP accumulated-undercoverage is substantially more backbone-stable than ordinary SCP in these stress constructions.
 
-The key result is that known-weight WCP accumulated-undercoverage is substantially more backbone-stable than ordinary SCP in these stress constructions: the WCP backbone-effect `A_cov` CI includes zero in 16/16 synthetic analytic profiles and 10/10 public dataset-geometry paths. In contrast, SCP shows significant backbone effects in 16/16 synthetic analytic profiles and 7/10 public paths.
+### P0-5 — high-dimensional nuisance-coordinate isolation
 
-Compact P0-2, P0-3, and P0-4 records are versioned under `analysis/`.
+P0-5 closes the low-dimensional synthetic limitation with a deliberately confound-controlled sensitivity at `p={5,20,50,100}`. The Ridge predictor and conformity score always use the same first five true signal coordinates, while oracle and estimated density ratios use all `p` covariates. Four analytic shift families, severity anchors `{0,1,2}`, and 30 paired repetitions yield 4,320 frozen method-condition rows.
+
+Estimated-WCP `p=100 - p=5` accumulated undercoverage increases significantly in all four analytic families, while the corresponding Oracle-WCP differences include zero in all four. At the true zero-shift anchor and `p=100`, held-out domain AUC is about 0.498 yet Estimated-WCP coverage is about 0.837, calibration ESS ratio about 0.00843, and analytic log-weight RMSE about 5.66. Under `p=100` variance shift at severity 2, Oracle-WCP coverage is approximately 0.99992 while almost all intervals are unbounded. These findings separate high-dimensional ratio-estimation failure from known-weight coverage transfer and reinforce the need to report usability alongside coverage.
+
+Compact P0-2 through P0-5 records are versioned under `analysis/`; complete frozen per-repetition tables are archived in the manuscript reproducibility supplement rather than duplicated into Git history.
 
 ## Repository map
 
 ```text
 synthetic/       locked synthetic runner, tests, primary results, pre-specified sensitivities
 real_data/       UCI acquisition/validation, final runner, tests, directional + radial outputs
-analysis/        post-primary robustness analyses, comparator/estimator/backbone expansions
+analysis/        post-primary comparator, estimator, backbone, and dimensionality expansions
 docs/protocols/  final locked protocols and accepted amendments
 ```
 
@@ -70,6 +61,7 @@ Additional post-freeze evidence:
 | P0-3 estimator-family stress — public | 3,200 |
 | P0-4 backbone factorial — synthetic | 17,040 |
 | P0-4 backbone factorial — public | 3,200 |
+| P0-5 high-dimensional weighting stress | 4,320 |
 
 Real-data configuration SHA-256: `b1aeef06011ba4c112737e9622f6a5adc477e87e76d36ebad5b6557871b6805a`.
 
@@ -82,11 +74,11 @@ python verify_release.py
 (cd real_data && PYTHONPATH=code python -m pytest -q tests)
 ```
 
-See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for complete rerun instructions and [`docs/DATASETS.md`](docs/DATASETS.md) for official UCI acquisition/checksum provenance. P0-4 code and compact frozen records are under [`analysis/p04_backbone_factorial`](analysis/p04_backbone_factorial).
+See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the locked core workflow and [`analysis/p05_highdim`](analysis/p05_highdim) for the P0-5 runner, audit, and compact frozen records. The cumulative manuscript supplement verifies P0-2 through P0-5 and ends with `P0-5 VERIFY: PASS`.
 
 ## Data policy
 
-Raw third-party UCI files are not redistributed. The repository provides official acquisition code, frozen schema rules, UCI identifiers, and canonical SHA-256 values. Compact final summaries, breakpoint tables, merge/configuration manifests, acquisition checksums, and executable code are versioned. Large deterministic per-repetition tables may be regenerated from the locked master seeds; the manuscript supplement archives the complete frozen P0-2/P0-3/P0-4 result tables and cumulative verification manifests.
+Raw third-party UCI files are not redistributed. The repository provides official acquisition code, frozen schema rules, UCI identifiers, and canonical SHA-256 values. Compact summaries, audit tables, manifests, checksums, and executable code are versioned. Large deterministic per-repetition tables are regenerated from locked seeds or read from the manuscript supplement.
 
 ## Scientific provenance
 
@@ -96,9 +88,10 @@ Raw third-party UCI files are not redistributed. The repository provides officia
 - Persistent undercoverage alarm: mean coverage `< 0.87` for two adjacent positive severities; a CI-confirmed companion is also reported.
 - Information-fragility alarm: `ESS / n_cal <= 0.20` for two adjacent positive severities.
 - Usability alarm: infinite-interval fraction `>= 0.05` for two adjacent positive severities.
-- Primary density-ratio estimator: standardized linear logistic domain classifier, `C=0.1`; sensitivity `C=0.01`.
-- P0-3 alternatives: histogram gradient boosting classifier odds and direct uLSIF.
+- Primary density-ratio estimator: standardized polynomial logistic domain classifier, `C=0.1`; sensitivity `C=0.01`.
+- P0-3 alternatives: histogram-gradient-boosting classifier odds and direct uLSIF.
 - P0-4 synthetic backbones: Ridge(alpha=1) and mean GBR; public backbones: Ridge(alpha=1) and HGBR.
+- P0-5 predictor isolation: first five signal coordinates fixed for prediction; all `p` coordinates used for weighting.
 
 Operational thresholds are reproducible stress-test landmarks, not universal theoretical constants.
 
