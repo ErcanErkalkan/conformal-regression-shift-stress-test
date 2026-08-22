@@ -1,0 +1,16 @@
+layer,metric,class,count
+public,A_cov,includes_zero,3
+public,A_cov,positive,7
+public,A_gap,includes_zero,2
+public,A_gap,negative,1
+public,A_gap,positive,7
+public,A_width,negative,8
+public,A_width,positive,2
+synthetic,A_cov,negative,8
+synthetic,A_cov,positive,8
+synthetic,A_gap,includes_zero,3
+synthetic,A_gap,negative,5
+synthetic,A_gap,positive,8
+synthetic,A_width,includes_zero,3
+synthetic,A_width,negative,7
+synthetic,A_width,positive,6
