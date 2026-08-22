@@ -1,0 +1,44 @@
+{
+  "version": "P0-3-v1",
+  "purpose": "density-ratio estimator family expansion inside weighted conformal regression",
+  "estimators": {
+    "logit": "locked primary classifier-odds estimator",
+    "HGB": {
+      "max_iter": 100,
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 15,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.15,
+      "n_iter_no_change": 8,
+      "tol": 1e-05
+    },
+    "uLSIF": {
+      "centers": 80,
+      "lambda_grid": [0.001, 0.01, 0.1],
+      "sigma_factor_grid": [0.5, 1.0, 2.0],
+      "selection": "80/20 source+target-unlabeled least-squares ratio-risk validation; no Y/test tuning",
+      "reference": "Kanamori, Hido & Sugiyama, JMLR 2009"
+    }
+  },
+  "synthetic": {
+    "setting": "nonlinear + heteroscedastic",
+    "repetitions": 30,
+    "shift_families": ["mean", "mixture", "nonlinear", "tail_mixture", "variance"]
+  },
+  "public": {
+    "datasets": ["appliances", "ccpp", "gas_turbine_nox", "online_news", "superconductivity"],
+    "repetitions": 20,
+    "modes": ["directional", "radial"],
+    "directional_severities": [0, 0.5, 1, 1.5, 2],
+    "radial_severities": [0, 1, 2]
+  },
+  "canonical_input_sha256": {
+    "ccpp": "007b39d32b2d7cd8599e8f92be298006b18b216f43a25f23ffa405880d5bdf43",
+    "appliances": "04061f9f449f503768ed370262beb4865a3e4e30c75b0d387cbc7c0140c624b6",
+    "superconductivity": "f989abf12e4214741b28204b59e7fb9f024ad7c2d11e4c4e3afa74fbb1b6580d",
+    "gas_turbine_nox": "811de4b24d263079000733e700d556ab8c3cdc9e8164d50a45e421a428e8cd17",
+    "online_news": "e70a03997c3e568a39508e39489aea4088e18436f18cbb8139f7f6ace45f53f0"
+  }
+}
