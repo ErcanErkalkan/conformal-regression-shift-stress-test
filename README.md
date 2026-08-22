@@ -8,17 +8,19 @@ Author: **Ercan Erkalkan** — Marmara University, Vocational School of Technica
 
 This repository provides a reproducible robustness-benchmarking and stress-testing artifact for conformal regression under controlled and natural distribution shift. It does not introduce a new conformal construction. It evaluates complete pipelines while keeping coverage degradation, correction mechanism, density-ratio reliability, effective calibration information, predictor sensitivity, interval usability, natural deployment drift, and computational cost separate.
 
-## Post-freeze robustness expansions
+## Important P1-3 terminology clarification
 
-Six explicit sensitivity, validation, and audit layers broaden the frozen core without redefining its primary comparisons.
+The evaluated kernel-mean-matching comparator is **KMM-WCP**: non-selective classical RBF kernel mean matching followed by a weighted split-conformal absolute-residual cutoff. Some immutable historical P0-2/P0-6/P0-7 result files use the string `KMM-CP-Ridge`; those frozen strings map to `KMM-WCP-Ridge` and are retained for checksum continuity. They must not be confused with the distinct published **selective KMM-CP** method of Laghuvarapu, Deb, and Sun (UAI 2026). See [`analysis/p02_comparator_expansion/METHOD_LABEL_CLARIFICATION_P1_3.md`](analysis/p02_comparator_expansion/METHOD_LABEL_CLARIFICATION_P1_3.md).
+
+## Robustness expansions
 
 ### P0-2 — contemporary correction mechanisms
 
-KMM-CP and randomly localized conformal prediction (RLCP) are evaluated on all five synthetic shift families in the representative nonlinear/heteroscedastic setting and on all five public directional datasets. KMM-CP reduces accumulated undercoverage relative to ordinary SCP on four of five synthetic paths and four of five public datasets; RLCP gives smaller but similarly broad gains.
+KMM-WCP and randomly localized conformal prediction (RLCP) are evaluated on all five synthetic shift families in the representative nonlinear/heteroscedastic setting and on all five public directional datasets. KMM-WCP reduces accumulated undercoverage relative to ordinary SCP on four of five synthetic paths and four of five public datasets; RLCP gives smaller but similarly broad gains.
 
 ### P0-3 — density-ratio estimator families
 
-The Ridge-WCP wrapper, split/seed construction, target draws, and shift paths are held fixed while the density-ratio estimator changes among locked polynomial-logistic odds, nonlinear histogram-gradient-boosting odds, and direct uLSIF. Results show estimator–shift-geometry interaction rather than a universally best estimator and demonstrate that high effective sample size is not equivalent to correct weighting.
+The Ridge-WCP wrapper, split/seed construction, target draws, and shift paths are held fixed while the density-ratio estimator changes among polynomial-logistic odds, nonlinear histogram-gradient-boosting odds, and direct uLSIF. Results show estimator–shift-geometry interaction rather than a universally best estimator and demonstrate that high effective sample size is not equivalent to correct weighting.
 
 ### P0-4 — common-backbone factorial separation
 
@@ -26,19 +28,19 @@ P0-4 separates conformal-wrapper and predictor-backbone effects. The synthetic 2
 
 ### P0-5 — high-dimensional nuisance-coordinate isolation
 
-P0-5 closes the low-dimensional synthetic limitation at `p={5,20,50,100}`. The Ridge predictor and conformity score always use the same first five true signal coordinates, while oracle and estimated density ratios use all `p` covariates. Estimated-WCP `p=100 - p=5` accumulated undercoverage increases significantly in all four analytic shift families, while the corresponding Oracle-WCP differences include zero in all four. At the true zero-shift anchor and `p=100`, held-out domain AUC is about 0.498 yet Estimated-WCP coverage is about 0.837, calibration ESS ratio about 0.00843, and analytic log-weight RMSE about 5.66.
+P0-5 tests `p={5,20,50,100}` while the Ridge predictor and conformity score always use the same first five true signal coordinates and weighting uses all `p` covariates. Estimated-WCP `p=100 - p=5` accumulated-undercoverage intervals exclude zero above zero in all four analytic shift families, while the corresponding Oracle-WCP intervals include zero in all four. At the true zero-shift anchor and `p=100`, held-out domain AUC is about 0.498 yet Estimated-WCP coverage is about 0.837, calibration ESS ratio about 0.00843, and analytic log-weight RMSE about 5.66.
 
 ### P0-6 — natural temporal deployment shift
 
-P0-6 adds a non-engineered chronological deployment validation using the UCI Gas Turbine NOx data. The source period is 2011-2013; 2014 and 2015 are evaluated as separate target years over 20 paired repetitions, with no exponential target tilt. Source-calibrated SCP coverage falls from 0.8557 in 2014 to 0.6391 in 2015. Logistic WCP and KMM-CP recover part of the 2015 loss, while a labeled-target calibration reference remains near nominal. The natural layer may contain conditional/process drift as well as covariate drift and is not treated as an exact covariate-shift validity experiment.
+P0-6 adds a non-engineered chronological deployment validation using the UCI Gas Turbine NOx data. The source period is 2011-2013; 2014 and 2015 are separate target years over 20 paired repetitions, with no exponential target tilt. Source-calibrated SCP coverage falls from 0.8557 in 2014 to 0.6391 in 2015. Logistic WCP and KMM-WCP recover part of the 2015 loss, while a labeled-target calibration reference remains near nominal. The natural layer may contain conditional/process drift as well as covariate drift and is not treated as an exact covariate-shift validity experiment.
 
 ### P0-7 — computational and scalability audit
 
-P0-7 measures the implementation cost of eight conformal pipelines under a sequential, verified single-thread protocol. Predictor fitting, conformal calibration, ratio/localization fitting, weight evaluation, interval inference, and fresh-process peak RSS are reported separately.
+P0-7 measures eight conformal pipelines under a sequential, verified single-thread protocol. Predictor fitting, conformal calibration, ratio/localization fitting, weight evaluation, interval inference, and fresh-process peak RSS are reported separately.
 
-At the common reference workload (`p=20`, `n_train=n_cal=n_unlabeled=n_test=1000`), median end-to-end time is about 1.72 ms for SCP-Ridge, 2.10 ms for Oracle-WCP-Ridge, 32.2 ms for uLSIF-WCP, 53.6 ms for Estimated-WCP-Logistic, 115.7 ms for RLCP, 181.3 ms for HGB-WCP, 255.9 ms for KMM-CP, and 1.30 s for CQR-GBR. Estimated-WCP-Logistic shows the strongest dimension sensitivity: runtime grows about 71.8x from `p=5` to `p=100`, and fresh-process peak-RSS delta reaches about 171 MB at `p=100`. KMM cost grows mainly with calibration/unlabeled size, while RLCP growth appears mainly in per-test localized inference.
+At the common reference workload (`p=20`, `n_train=n_cal=n_unlabeled=n_test=1000`), median end-to-end time is about 1.72 ms for SCP-Ridge, 2.10 ms for Oracle-WCP-Ridge, 32.2 ms for uLSIF-WCP, 53.6 ms for Estimated-WCP-Logistic, 115.7 ms for RLCP, 181.3 ms for HGB-WCP, 255.9 ms for KMM-WCP, and 1.30 s for CQR-GBR. Estimated-WCP-Logistic shows the strongest dimension sensitivity: runtime grows about 71.8x from `p=5` to `p=100`, and fresh-process peak-RSS delta reaches about 171 MB at `p=100`.
 
-Compact P0-2 through P0-7 records are versioned under `analysis/`. Complete frozen per-repetition/post-freeze tables and the portable P0-7 runner are archived in the cumulative manuscript reproducibility supplement rather than duplicating all raw records into Git history.
+Compact P0-2 through P0-7 records are versioned under `analysis/`. Complete frozen per-repetition tables and the portable computational runner are archived in the cumulative manuscript reproducibility supplement rather than duplicating all raw records into Git history.
 
 ## Repository map
 
@@ -46,25 +48,20 @@ Compact P0-2 through P0-7 records are versioned under `analysis/`. Complete froz
 synthetic/       locked synthetic runner, tests, primary results, sensitivities
 real_data/       UCI acquisition/validation, final runner, directional + radial outputs
 analysis/        comparator, estimator, backbone, dimensional, temporal, and compute audits
-docs/protocols/  final locked protocols and accepted amendments
+docs/protocols/  final protocols and accepted amendments
 ```
 
-## Frozen primary evidence
-
-| layer | method-result rows | seed rows |
-|---|---:|---:|
-| Synthetic primary | 14,520 | 3,000 |
-| Real directional | 2,500 | 500 |
-| Real radial | 600 | 120 |
-
-Additional post-freeze evidence:
+## Evidence inventory
 
 | layer | frozen result rows |
 |---|---:|
-| P0-2 contemporary comparator — synthetic | 3,630 |
-| P0-2 contemporary comparator — public | 2,500 |
-| P0-3 estimator-family stress — synthetic | 2,850 |
-| P0-3 estimator-family stress — public | 3,200 |
+| Synthetic primary | 14,520 |
+| Real directional | 2,500 |
+| Real radial | 600 |
+| P0-2 comparator — synthetic | 3,630 |
+| P0-2 comparator — public | 2,500 |
+| P0-3 estimator stress — synthetic | 2,850 |
+| P0-3 estimator stress — public | 3,200 |
 | P0-4 backbone factorial — synthetic | 17,040 |
 | P0-4 backbone factorial — public | 3,200 |
 | P0-5 high-dimensional weighting stress | 4,320 |
@@ -82,11 +79,11 @@ python verify_release.py
 (cd real_data && PYTHONPATH=code python -m pytest -q tests)
 ```
 
-See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the locked core workflow, [`analysis/p05_highdim`](analysis/p05_highdim) for high-dimensional stress, [`analysis/p06_natural_temporal`](analysis/p06_natural_temporal) for the natural chronological deployment layer, and [`analysis/p07_computational_scalability`](analysis/p07_computational_scalability) for the computational audit. The cumulative manuscript supplement verifies P0-2 through P0-7 and ends with `P0-7 VERIFY: PASS`.
+See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md), [`analysis/p05_highdim`](analysis/p05_highdim), [`analysis/p06_natural_temporal`](analysis/p06_natural_temporal), and [`analysis/p07_computational_scalability`](analysis/p07_computational_scalability). The cumulative manuscript supplement verifies P0-2 through P0-7 and ends with `P0-7 VERIFY: PASS`.
 
 ## Data policy
 
-Raw third-party UCI files are not redistributed. The repository provides official acquisition code, frozen schema rules, UCI identifiers, canonical SHA-256 values, compact summaries, audit tables, manifests, and executable core code. Complete deterministic post-freeze tables are retained in the manuscript supplement when useful for auditability.
+Raw third-party UCI files are not redistributed. The repository provides acquisition code, schema rules, UCI identifiers, canonical SHA-256 values, compact summaries, audit tables, manifests, and executable code. Complete deterministic tables are retained in the manuscript supplement when useful for auditability.
 
 ## Scientific provenance
 
@@ -107,7 +104,7 @@ Operational thresholds are reproducible stress-test landmarks, not universal the
 
 ## Citation
 
-Citation metadata are provided in [`CITATION.cff`](CITATION.cff).
+Citation metadata are provided in [`CITATION.cff`](CITATION.cff). Scientific artifact version remains **1.5.0**; P1-3 changes terminology/editorial framing but does not change the numerical evidence.
 
 ## Reuse
 
