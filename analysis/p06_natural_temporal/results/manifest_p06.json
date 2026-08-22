@@ -1,0 +1,35 @@
+{
+  "version": "P0-6-v1",
+  "purpose": "natural temporal deployment shift without engineered tilting",
+  "dataset": "UCI Gas Turbine CO and NOx Emission Data Set",
+  "doi": "10.24432/C5WC95",
+  "split": "2011-2013 source; 2014 and 2015 natural target years",
+  "source_protocol": "UCI-recommended first three years train/CV and last two years test",
+  "year_counts": {
+    "2011": 7411,
+    "2012": 7628,
+    "2013": 7152,
+    "2014": 7158,
+    "2015": 7384
+  },
+  "predictors": ["AT", "AP", "AH", "AFDP", "GTEP", "TIT", "TAT", "TEY", "CDP"],
+  "target": "NOx",
+  "methods": [
+    "Estimated-WCP-HGB",
+    "Estimated-WCP-Logit",
+    "KMM-CP-Ridge",
+    "RLCP-Ridge",
+    "SCP-Ridge",
+    "Target-Cal-SCP-Reference"
+  ],
+  "budgets": {
+    "source_train": 12000,
+    "source_calibration": 1000,
+    "density_source": 1000,
+    "target_unlabeled": 1000,
+    "target_labeled_reference_calibration": 1000,
+    "target_test": 1000
+  },
+  "note": "Target-Cal-SCP-Reference uses target labels only as a non-deployable diagnostic; all practical correction methods are label-free on target. Natural temporal layer may contain conditional as well as covariate drift and is not treated as an exact covariate-shift experiment.",
+  "input_sha256": "811de4b24d263079000733e700d556ab8c3cdc9e8164d50a45e421a428e8cd17"
+}
