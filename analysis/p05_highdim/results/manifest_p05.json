@@ -1,0 +1,25 @@
+{
+  "version": "P0-5-v1-final",
+  "purpose": "high-dimensional nuisance-coordinate isolation for density-ratio/weighting fragility",
+  "repetitions": 30,
+  "dimensions": [5, 20, 50, 100],
+  "shift_families": ["mean", "variance", "mixture", "tail_mixture"],
+  "severities": [0.0, 1.0, 2.0],
+  "response": "linear",
+  "noise": "gaussian",
+  "predictor_rule": "Ridge/conformal score use first 5 signal coordinates only for all dimensions",
+  "weighting_rule": "oracle and estimated density ratios use all p covariates",
+  "nested_latent_design": true,
+  "sample_sizes": {"train": 1000, "calibration": 1000, "test": 2500, "unlabeled_target": 1000},
+  "estimated_ratio": {
+    "family": "degree-2 polynomial logistic classifier odds",
+    "degree": 2,
+    "C": 0.1,
+    "max_iter": 400,
+    "expanded_feature_counts": {"5": 20, "20": 230, "50": 1325, "100": 5150}
+  },
+  "expected_rows": 4320,
+  "expected_unique_ratio_fits": 1080,
+  "all_estimated_fits_converged": true,
+  "scientific_scope": "post-freeze within-layer dimensionality sensitivity; does not replace locked p=5 five-point core path"
+}
