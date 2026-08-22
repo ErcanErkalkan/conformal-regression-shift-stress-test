@@ -7,6 +7,6 @@ authors:
     given-names: Ercan
     orcid: "https://orcid.org/0000-0001-9259-7112"
     email: ercan.erkalkan@marmara.edu.tr
-version: 1.3.0
+version: 1.4.0
 date-released: 2026-08-22
 repository-code: "https://github.com/ErcanErkalkan/conformal-regression-shift-stress-test"
