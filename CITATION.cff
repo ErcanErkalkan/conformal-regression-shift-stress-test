@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If this research artifact is used, please cite the associated manuscript."
-title: "Stress-Testing Conformal Regression Under Controlled Covariate Shift: Validity Breakpoints, Weight Fragility, and Interval Usability"
+title: "Stress-Testing Conformal Regression Under Covariate Shift: A Reproducible Benchmark of Coverage, Weight Reliability, and Interval Usability"
 type: software
 authors:
   - family-names: Erkalkan
