@@ -4,7 +4,8 @@ P0-7 adds a controlled computational audit without changing any frozen statistic
 
 ## Frozen protocol
 
-- Eight pipelines: SCP-Ridge, CQR-GBR, Oracle-WCP-Ridge, Estimated-WCP-Logistic, HGB-WCP-Ridge, uLSIF-WCP-Ridge, KMM-CP-Ridge, RLCP-Ridge.
+- Eight pipelines: SCP-Ridge, CQR-GBR, Oracle-WCP-Ridge, Estimated-WCP-Logistic, HGB-WCP-Ridge, uLSIF-WCP-Ridge, **KMM-WCP-Ridge**, RLCP-Ridge.
+- Historical frozen timing/result rows may use `KMM-CP-Ridge`; that string denotes the same non-selective classical KMM + weighted-conformal comparator and is retained for checksum continuity, not as a claim to reproduce selective KMM-CP.
 - Final timing jobs are sequential; timed method batches never overlap.
 - NumPy/SciPy OpenBLAS and scikit-learn OpenMP pools are verified at one thread with `threadpoolctl`.
 - Python import time, synthetic-data generation, and a common numerical warmup are excluded.
@@ -15,10 +16,10 @@ P0-7 adds a controlled computational audit without changing any frozen statistic
 
 ## Main findings
 
-At the reference workload, median end-to-end cost ranges from about 1.72 ms for SCP-Ridge and 2.10 ms for Oracle-WCP-Ridge to 1.30 s for CQR-GBR. Estimated-WCP-Logistic costs about 53.6 ms, RLCP about 115.7 ms, HGB-WCP about 181.3 ms, and KMM-CP about 255.9 ms.
+At the reference workload, median end-to-end cost ranges from about 1.72 ms for SCP-Ridge and 2.10 ms for Oracle-WCP-Ridge to 1.30 s for CQR-GBR. Estimated-WCP-Logistic costs about 53.6 ms, RLCP about 115.7 ms, HGB-WCP about 181.3 ms, and KMM-WCP about 255.9 ms.
 
 Estimated-WCP-Logistic shows the strongest dimension sensitivity: total runtime grows about 71.8x from `p=5` to `p=100`, with empirical log-log exponent 1.44 and fresh-process peak-RSS delta about 171 MB at `p=100`. KMM grows mainly with calibration/unlabeled sample size; RLCP grows mainly in per-test localized inference.
 
 The audit therefore treats computational cost as a separate diagnostic coordinate: low runtime does not imply reliable shift correction, and statistically valid-looking coverage can still be computationally or operationally unusable.
 
-Compact frozen results are versioned in `results/`. The complete 292-row runtime table, portable P0-7 runner/batch/analyzer, cumulative hashes, and verifier are archived in the manuscript reproducibility supplement `Reproducibility_Supplement_P0_7.zip`.
+Compact frozen results are versioned in `results/`. The complete 292-row runtime table, portable P0-7 runner/batch/analyzer, cumulative hashes, and verifier are archived in the manuscript reproducibility supplement. The P1-3 submission supplement adds a method-label clarification while leaving all frozen numerical files unchanged.
