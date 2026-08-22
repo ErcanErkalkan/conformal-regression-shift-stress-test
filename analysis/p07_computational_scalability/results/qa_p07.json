@@ -1,0 +1,27 @@
+{
+  "batch_files": 29,
+  "rows": 292,
+  "duplicate_keys": 0,
+  "methods": [
+    "CQR-GBR",
+    "Estimated-WCP-Logistic",
+    "HGB-WCP-Ridge",
+    "KMM-CP-Ridge",
+    "Oracle-WCP-Ridge",
+    "RLCP-Ridge",
+    "SCP-Ridge",
+    "uLSIF-WCP-Ridge"
+  ],
+  "axes": [
+    "calibration",
+    "dimension",
+    "reference",
+    "test"
+  ],
+  "finite_total_times": true,
+  "nonnegative_component_times": true,
+  "kmm_residual_max": 9.741146394028209e-05,
+  "kmm_residual_failures_gt_1e-4": 0,
+  "fresh_reference_rows": 8,
+  "expected_reference_methods": 8
+}
