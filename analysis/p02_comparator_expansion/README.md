@@ -2,9 +2,13 @@
 
 This analysis layer adds two shift-aware conformal comparators without modifying the frozen core benchmark.
 
+## Method-label clarification
+
+The evaluated kernel-mean-matching comparator is **KMM-WCP-Ridge**: non-selective classical RBF kernel mean matching followed by a weighted absolute-residual conformal cutoff. Historical frozen CSV/JSON outputs use the string `KMM-CP-Ridge`; those immutable strings are retained for checksum continuity. They map to `KMM-WCP-Ridge` in the journal manuscript. This implementation is distinct from the published **selective KMM-CP** procedure of Laghuvarapu, Deb, and Sun (UAI 2026).
+
 ## Methods
 
-- **KMM-CP-Ridge**: RBF kernel mean matching with bound `B=30`, deterministic bandwidth selection, projected-FISTA optimization, and a weighted absolute-residual conformal cutoff.
+- **KMM-WCP-Ridge** (historical frozen label `KMM-CP-Ridge`): RBF kernel mean matching with bound `B=30`, deterministic bandwidth selection, projected-FISTA optimization, and a weighted absolute-residual conformal cutoff.
 - **RLCP-Ridge**: Gaussian randomly localized conformal prediction following Hore & Barber (JRSS-B 2025, DOI `10.1093/jrsssb/qkae103`), using the same Ridge residual score as SCP. The localization bandwidth is selected from source features only to target median local effective size 200.
 
 ## Design
@@ -16,7 +20,7 @@ This analysis layer adds two shift-aware conformal comparators without modifying
 
 ## Main result
 
-KMM-CP lowers paired pathwise undercoverage area relative to SCP with 95% intervals excluding zero on 4/5 synthetic shift families and 4/5 public datasets. RLCP shows the same 4/5 + 4/5 pattern with smaller reductions. KMM generally remains behind the known-ratio/known-tilt reference, and RLCP is farther behind on the difficult paths. This is consistent with the mechanisms: KMM targets RKHS moment balance, RLCP targets randomized localization, while controlled WCP directly uses the shift-weight mechanism.
+KMM-WCP lowers paired pathwise undercoverage area relative to SCP with 95% intervals excluding zero on 4/5 synthetic shift families and 4/5 public datasets. RLCP shows the same 4/5 + 4/5 pattern with smaller reductions. KMM-WCP generally remains behind the known-ratio/known-tilt reference, and RLCP is farther behind on the difficult paths. This is consistent with the mechanisms: KMM-WCP targets RKHS moment balance, RLCP targets randomized localization, while controlled WCP directly uses the shift-weight mechanism.
 
 ## QA
 
